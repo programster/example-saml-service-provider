@@ -17,6 +17,10 @@ services:
       source: ./ssl
       read_only: true
     - type: bind
+      target: /var/www/site
+      source: ./app
+      read_only: false
+    - type: bind
       target: /saml-certs
       source: ./saml-certs
       read_only: false

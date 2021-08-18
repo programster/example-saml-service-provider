@@ -7,8 +7,15 @@ RUN apt-get install -y software-properties-common apt-transport-https \
   && apt-get update \
   && apt-get install php8.0-cli -y
 
-RUN apt-get update && apt-get install vim apache2 cron curl libapache2-mod-php8.0 \
-    php8.0-cli php8.0-xml php8.0-mbstring php8.0-curl php8.0-pgsql -y
+RUN apt-get update && apt-get install vim apache2 cron curl git unzip libapache2-mod-php8.0 \
+    php8.0-cli php8.0-xml php8.0-mbstring php8.0-curl php8.0-pgsql php8.0-zip -y
+
+# Install latest composer
+RUN apt-get update \
+  && apt-get install curl -y \
+  && curl -sS https://getcomposer.org/installer | php \
+  && mv composer.phar /usr/bin/composer \
+  && chmod +x /usr/bin/composer
 
 # Enable the php mod we just installed
 RUN a2enmod php8.0
@@ -50,9 +57,15 @@ RUN a2enmod ssl
 ADD docker/apache-ssl-config.conf /etc/apache2/sites-available/default-ssl.conf
 RUN a2ensite default-ssl
 
-# Use the crontab file.
-# The crontab file was already added when we added "project"
-#RUN crontab /var/www/my-site/project/docker/crons.conf
+# Copy the site across.
+COPY --chown=root:www-data app /var/www/site
+
+# Install php packages.
+RUN cd /var/www/site \
+  && rm -rf vendor \
+  && composer install \
+  && chown --recursive root:www-data vendor \
+  && chmod --recursive 750 vendor
 
 # Set permissions
 RUN chown root:www-data /var/www
