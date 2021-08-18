@@ -1,0 +1,33 @@
+---
+version: "3.9"
+
+services:
+
+  serviceProvider:
+    image: my-app
+    build:
+      context: .
+    ports:
+    - 80:80
+    - 443:443
+    container_name: service-provider
+    volumes:
+    - type: bind
+      target: /etc/apache2/ssl
+      source: ./ssl
+      read_only: true
+    - type: bind
+      target: /logs
+      source: ./logs
+      read_only: false
+    - type: bind
+      target: /var/www/site
+      source: ./app
+      read_only: false
+    - type: bind
+      target: /saml-certs
+      source: ./saml-certs
+      read_only: false
+    environment:
+    - ENVIRONMENT=dev
+...
