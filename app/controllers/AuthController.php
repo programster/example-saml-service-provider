@@ -32,6 +32,50 @@ class AuthController extends AbstractSlimController
             $controller = new AuthController($request, $response, $args);
             return $controller->handleSamlLogoutResponse();
         });
+
+        # Handle response back from SAML identity provider.
+        $app->get('/auth/saml-metadata', function (Psr\Http\Message\ServerRequestInterface $request, Psr\Http\Message\ResponseInterface $response, $args) {
+            $controller = new AuthController($request, $response, $args);
+            return $controller->handleSamlMetadataRequest();
+        });
+    }
+
+
+    /**
+     * Handle a request to get the metdata file for SAML integration.
+     * @return
+     */
+    private function handleSamlMetadataRequest() : Psr\Http\Message\ResponseInterface
+    {
+        // SAML posted back the data, processResponse relies on this data being in $_POST
+        $samlClient = SiteSpecific::getSamlClient();
+        $settings = $samlClient->getAuth()->getSettings();
+
+        $technicalContact = new \Programster\Saml\Contact(
+            \Programster\Saml\ContactType::createTechnical(),
+            "Programster",
+            "me@programster.org"
+        );
+
+        $contacts = new Programster\Saml\ContactCollection($technicalContact);
+
+        $organizationInfo = new \Programster\Saml\OrganizationTranslation(
+            "Programster Ltd",
+            "Programster Ltd",
+            "https://blog.programster.org"
+        );
+
+        $organization = new Programster\Saml\Organization($organizationInfo);
+
+        $metadata = $samlClient->getServiceProviderMetadata(
+            signMetadata: true,
+            authnsign: true,
+            wantAssertionsSigned: true,
+            contacts : $contacts,
+            organization: $organization,
+        );
+
+        return SlimLib::createXmlResponse($metadata);
     }
 
 

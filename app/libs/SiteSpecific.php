@@ -30,8 +30,33 @@ class SiteSpecific
      */
     public static function getSamlClient() : \Programster\Saml\SamlClient
     {
+        $mailAttribute = new Programster\Saml\RequestedAttribute(
+            isRequired: true,
+            name: "urn:oid:0.9.2342.19200300.100.1.3",
+            friendlyName: "mail"
+        );
+
+        $surnameAttribute = new Programster\Saml\RequestedAttribute(
+            isRequired: true,
+            name: "urn:oid:2.5.4.4",
+            friendlyName: "surname"
+        );
+
+        $givenNameAttribute = new Programster\Saml\RequestedAttribute(
+            isRequired: true,
+            name: "urn:oid:2.5.4.42",
+            friendlyName: "givenName"
+        );
+
+        $requestedAttributes = new Programster\Saml\RequestedAttributeCollection(
+            $givenNameAttribute,
+            $surnameAttribute,
+            $mailAttribute
+        );
+        
         $spConfig = new Programster\Saml\ServiceProviderConfig(
             entityId: APP_SERVICE_PROVIDER_IDENTITY,
+            subjectNameIdFormat: Programster\Saml\NameIdFormat::createPersistent(),
             name: APP_SERVICE_PROVIDER_NAME,
             description: "A test service provider",
             loginHandlerUrl: APP_URL . "/auth/saml-login-handler",
