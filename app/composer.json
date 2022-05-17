@@ -3,6 +3,7 @@
         "irap/autoloader": "1.0.*",
         "onelogin/php-saml": "^4.0",
         "programster/abstract-view": "^1.1",
+        "programster/core-libs": "^2.1",
         "programster/saml": "dev-certificate-rollover",
         "slim/psr7": "^1.4",
         "slim/slim": "^4.8"
