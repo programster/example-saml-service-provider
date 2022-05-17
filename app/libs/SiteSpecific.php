@@ -53,7 +53,7 @@ class SiteSpecific
             $surnameAttribute,
             $mailAttribute
         );
-        
+
         $spConfig = new Programster\Saml\ServiceProviderConfig(
             entityId: APP_SERVICE_PROVIDER_IDENTITY,
             subjectNameIdFormat: Programster\Saml\NameIdFormat::createPersistent(),
@@ -65,11 +65,22 @@ class SiteSpecific
             privateKey: file_get_contents(SERVICE_PROVIDER_PRIVATE_KEY_PATH)
         );
 
+        $idpSigningCerts = \Programster\CoreLibs\Filesystem::getDirContents(
+            dir: IDENTITY_PROVIDER_PUBLIC_SIGNING_CERT_DIR,
+            includeHiddenFilesAndFolders: false
+        );
+
+        // convert the list of certificate filepaths to a list of their contents.
+        foreach ($idpSigningCerts as $index => $filepath)
+        {
+            $idpSigningCerts[$index] = file_get_contents($filepath);
+        }
+
         $idpConfig = new \Programster\Saml\IdentityProviderConfig(
             entityId: IDENTITY_PROVIDER_IDENTITY_URI,
             authUrl: IDENTITY_PROVIDER_AUTH_URL,
             logoutUrl: IDENTITY_PROVIDER_LOGOUT_URL,
-            publicSigningCertificate: file_get_contents(IDENTITY_PROVIDER_PUBLIC_SIGNING_CERT),
+            publicSigningCertificates: $idpSigningCerts,
         );
 
         $samlConfig = new \Programster\Saml\SamlConfig($spConfig, $idpConfig);

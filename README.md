@@ -26,8 +26,9 @@ The saml-certs folder expects the service providers certificate files with the n
 * *sp-public-signing-certificate.crt* - the public certificate
 * *sp-private-signing-certificate.pem* - the private key.
 
-The folder should also contain the identity providers public certificate with the name:
-*idp-public-signing-certificate.crt*.
+The folder contains a subfolder called `idp-public-signing-certs` which needs to contain all
+the public signing certificates you wish to support. This is to support certificate rollover.
+The certificates can have any name.
 
 ## SSL Certificates
 The application expects you to provide SSL certificates for the site with the following paths

@@ -37,9 +37,11 @@ define('IDENTITY_PROVIDER_AUTH_URL', IDENTITY_PROVIDER_BASE_URL . "/simplesaml/s
 define('IDENTITY_PROVIDER_LOGOUT_URL', IDENTITY_PROVIDER_BASE_URL . "/simplesaml/saml2/idp/SingleLogoutService.php");
 //define('IDENTITY_PROVIDER_LOGOUT_URL', IDENTITY_PROVIDER_BASE_URL . "/simplesaml/module.php/saml/sp/saml2-logout.php/default-sp");
 
-# Specify the path to the public "signing" certificate for the IDP for validating responses.
-# This should be the same as the file at /var/www/simplesamlphp/cert/server.crt in the IDP.
-define('IDENTITY_PROVIDER_PUBLIC_SIGNING_CERT', '/saml-certs/idp-public-signing-certificate.crt');
+# Specify the path to the folder containing any/all of the public "signing" certificates 
+# for the IDP for validating responses. At least one of these certificates should correspond
+# to the private key being used by the IDP to sign their messages.
+# Allowing multiple certificates facilitates certificate rollover by the IDP.
+define('IDENTITY_PROVIDER_PUBLIC_SIGNING_CERT_DIR', '/saml-certs/idp-public-signing-certs');
 
 # Specify the path to the x509 certificate file for this service provider
 define('SERVICE_PROVIDER_CERT_PATH', '/saml-certs/sp-public-signing-certificate.crt');
