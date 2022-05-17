@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33784ae444ec600b8d71ece29a6e0698",
+    "content-hash": "be8b709fc516301c2f276cb1ecc57e16",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -307,16 +307,16 @@
         },
         {
             "name": "programster/saml",
-            "version": "dev-certificate-rollover",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/programster/package-saml-helper.git",
-                "reference": "62fc6a5cc29ceba3dac9a9ccbecfcb851a5aa60c"
+                "reference": "3451ee4db90b60649faa0fcb12c7b526535f5aa3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/programster/package-saml-helper/zipball/62fc6a5cc29ceba3dac9a9ccbecfcb851a5aa60c",
-                "reference": "62fc6a5cc29ceba3dac9a9ccbecfcb851a5aa60c",
+                "url": "https://api.github.com/repos/programster/package-saml-helper/zipball/3451ee4db90b60649faa0fcb12c7b526535f5aa3",
+                "reference": "3451ee4db90b60649faa0fcb12c7b526535f5aa3",
                 "shasum": ""
             },
             "require": {
@@ -352,9 +352,9 @@
             ],
             "support": {
                 "issues": "https://github.com/programster/package-saml-helper/issues",
-                "source": "https://github.com/programster/package-saml-helper/tree/certificate-rollover"
+                "source": "https://github.com/programster/package-saml-helper/tree/2.3.0"
             },
-            "time": "2022-05-17T18:29:40+00:00"
+            "time": "2022-05-17T19:05:40+00:00"
         },
         {
             "name": "psr/container",
@@ -1190,9 +1190,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "programster/saml": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
